@@ -1,8 +1,11 @@
 This project is part of NUBOMEDIA
 [www.nubomedia.eu](http://www.nubomedia.eu)
 
-This document describes how to utilize [ARModule](https://github.com/nubomedia-vtt/armodule)
 =========================
+This document describes how to utilize the [ARModule](https://github.com/nubomedia-vtt/armodule)
+
+Some material that can be utilized is given at the end.
+
 
 **On the Server Side**
 
@@ -47,4 +50,12 @@ Please refer to this kmd to find out the syntax of json currently in use.
 The models, images etc are loaded from the file system or via URL.
 
 Thus, please check that the paths/URLs are correct ie that eg /opt/cube.ply is readable.
+
+      
+Material
+=========================
+
+**Augmented models**
+
+Some models can be found eg from [models](http://80.96.122.50/Markus.Ylikerala/vtt-armarkerdetector/tree/master/models) 
 
