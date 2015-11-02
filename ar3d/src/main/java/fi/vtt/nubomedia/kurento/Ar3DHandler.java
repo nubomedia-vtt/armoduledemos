@@ -293,7 +293,9 @@ public class Ar3DHandler extends TextWebSocketHandler {
 	private void reload(WebSocketSession session, JsonObject jsonMessage) {
 	    try {
 		System.err.println("json RELOAD from browser");
-		arFilter.setArThing(createArThings(jsonMessage.getAsJsonPrimitive("augmentables").getAsString()));	
+		if(arFilter != null){
+		    arFilter.setArThing(createArThings(jsonMessage.getAsJsonPrimitive("augmentables").getAsString()));
+		}	
 	    }
 	    catch (Throwable t) {
 		t.printStackTrace();
