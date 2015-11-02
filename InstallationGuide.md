@@ -9,9 +9,9 @@ where KMS is installed. Otherwise change the code of ar3d.
 
 Fetch and execute the installation script:
 ```bash
-wget -N https://github.com/nubomedia-vtt/armoduledemos/raw/master/optional.sh
+wget -N https://github.com/nubomedia-vtt/armoduledemos/raw/master/install_ar3d.sh
 chmod u+x optional.sh
-./optional.sh
+./install_ar3d.sh
 ```
 
 **For Ubuntu Server Users**
