@@ -40,7 +40,7 @@ if [ ! -d $AR3D ]; then
   git clone https://github.com/nubomedia-vtt/armoduledemos.git
 fi
 
-cd $TARGET/armoduledemos/Media
+cd $TARGET/armoduledemos/Models
 sudo cp teapot.ply /opt/
 sudo cp faerie.md2 /opt/
 sudo cp faerie2.bmp /opt/

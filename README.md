@@ -74,7 +74,7 @@ An example about the syntax
 Material
 =========================
 
-**Augmented models**
+**Augmented Models**
 
 Some models can be found eg from [models](https://github.com/nubomedia-vtt/armoduledemos/tree/master/Models) 
 
