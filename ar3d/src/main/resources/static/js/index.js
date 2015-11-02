@@ -19,6 +19,7 @@ var videoOutput;
 var webRtcPeer;
 var state = null;
 //var console;
+var timerId=null;
 
 const I_CAN_START = 0;
 const I_CAN_STOP = 1;
@@ -277,6 +278,27 @@ function hideSpinner() {
 		arguments[i].poster = './img/webrtc.png';
 		arguments[i].style.background = '';
 	}
+}
+
+function show_latency()
+{
+    if ( document.getElementById('videoE2Elatency').checked) {
+	timerId = setInterval(get_stats,1000);
+    }
+    else {
+	document.getElementById('testVideoE2Elatency').innerHTML = "  VideoE2ELatency (ms): ";
+	clearInterval(timerId);
+    }
+}
+
+function get_stats()
+{
+    var message = {
+	id : 'get_stats',
+	val: ''
+    };
+
+    sendMessage(message);
 }
 
 /**

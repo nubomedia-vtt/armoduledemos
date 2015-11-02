@@ -72,6 +72,7 @@ public class Ar3DHandler extends TextWebSocketHandler {
 	private ConcurrentHashMap<String, MediaPipeline> pipelines = new ConcurrentHashMap<String, MediaPipeline>();
 	private String jsonFile;
 	private final ConcurrentHashMap<String, UserSession> users = new ConcurrentHashMap<String, UserSession>();
+    private WebRtcEndpoint webRtcEndpoint;
 	
 	@Autowired
 	private KurentoClient kurento;
@@ -83,10 +84,13 @@ public class Ar3DHandler extends TextWebSocketHandler {
 
 		JsonObject jsonMessage = gson.fromJson(message.getPayload(),
 				JsonObject.class);
-
+		
 		log.debug("Incoming message: {}", jsonMessage);
 
 		switch (jsonMessage.get("id").getAsString()) {
+		case "get_stats":			
+			getStats(session);
+			break;
 		case "start":
 			start(session, jsonMessage);
 			break;
@@ -311,7 +315,7 @@ public class Ar3DHandler extends TextWebSocketHandler {
 			MediaPipeline pipeline = kurento.createMediaPipeline();
 			user.setMediaPipeline(pipeline);
 			//pipelines.put(session.getId(), pipeline);
-			WebRtcEndpoint webRtcEndpoint = new WebRtcEndpoint.Builder(pipeline).build();
+			webRtcEndpoint = new WebRtcEndpoint.Builder(pipeline).build();
 			
 			user.setWebRtcEndpoint(webRtcEndpoint);
 			users.put(session.getId(), user);
@@ -434,4 +438,43 @@ public class Ar3DHandler extends TextWebSocketHandler {
 	public void setJson(String jsonFile) {
 		this.jsonFile = jsonFile;		
 	}	
+
+    private void getStats(WebSocketSession session)
+    {
+    	
+    	try {
+    		Map<String,Stats> wr_stats= webRtcEndpoint.getStats();
+		System.err.println("GET STATS...");
+    		for (Stats s :  wr_stats.values()) {
+		System.err.println("STATS:" + s);    		
+    			switch (s.getType()) {		
+    			case endpoint:
+			    System.err.println("STATS endpoint");
+    				EndpointStats end_stats= (EndpointStats) s;
+    				double e2eVideLatency= end_stats.getVideoE2ELatency() / 1000000;
+    				
+    				JsonObject response = new JsonObject();
+    				response.addProperty("id", "videoE2Elatency");
+    				response.addProperty("message", e2eVideLatency);				
+
+			synchronized (session) {
+    				session.sendMessage(new TextMessage(response.toString()));				
+			}
+    				break;
+	
+			case inboundrtp:
+			    break;
+			case outboundrtp:
+			    break;
+
+    			default:	
+			    System.err.println("STATS DEFAULTS: " + s.getType() + "#" + s.getClass());
+    				break;
+    			}				
+    		}
+    	} catch (IOException e) {
+			log.error("Exception sending message", e);
+		}
+    	
+    }
 }
