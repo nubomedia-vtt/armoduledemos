@@ -313,6 +313,9 @@ public class Ar3DHandler extends TextWebSocketHandler {
 		try {
 			UserSession user = new UserSession();
 			MediaPipeline pipeline = kurento.createMediaPipeline();
+			System.err.println("STATS A:" + pipeline.getLatencyStats());
+			pipeline.setLatencyStats(true);
+			System.err.println("STATS B:" + pipeline.getLatencyStats());
 			user.setMediaPipeline(pipeline);
 			//pipelines.put(session.getId(), pipeline);
 			webRtcEndpoint = new WebRtcEndpoint.Builder(pipeline).build();
@@ -444,12 +447,12 @@ public class Ar3DHandler extends TextWebSocketHandler {
     	
     	try {
     		Map<String,Stats> wr_stats= webRtcEndpoint.getStats();
-		System.err.println("GET STATS...");
+		//System.err.println("GET STATS..." + wr_stats);
     		for (Stats s :  wr_stats.values()) {
-		System.err.println("STATS:" + s);    		
+		    //System.err.println("STATS:" + s);    		
     			switch (s.getType()) {		
-    			case endpoint:
-			    System.err.println("STATS endpoint");
+    			case endpoint:{
+			    //System.err.println("STATS endpoint");
     				EndpointStats end_stats= (EndpointStats) s;
     				double e2eVideLatency= end_stats.getVideoE2ELatency() / 1000000;
     				
@@ -460,15 +463,30 @@ public class Ar3DHandler extends TextWebSocketHandler {
 			synchronized (session) {
     				session.sendMessage(new TextMessage(response.toString()));				
 			}
+			}
     				break;
 	
-			case inboundrtp:
+			case inboundrtp:{
+			    RTCInboundRTPStreamStats stats = (RTCInboundRTPStreamStats)s;
+			    //System.err.println(stats.getJitter());
+			}
 			    break;
-			case outboundrtp:
+			case outboundrtp:{
+			    RTCOutboundRTPStreamStats stats = (RTCOutboundRTPStreamStats)s;
+			    //System.err.println(stats.getRoundTripTime());
+
+    			// 	JsonObject response = new JsonObject();
+    			// 	response.addProperty("id", "videoE2Elatency");
+    			// 	response.addProperty("message", stats.getRoundTripTime());
+
+			// synchronized (session) {
+    			// 	session.sendMessage(new TextMessage(response.toString()));				
+			// }
+			}
 			    break;
 
     			default:	
-			    System.err.println("STATS DEFAULTS: " + s.getType() + "#" + s.getClass());
+			    //System.err.println("STATS DEFAULTS: " + s.getType() + "#" + s.getClass());
     				break;
     			}				
     		}
