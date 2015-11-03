@@ -64,6 +64,9 @@ ws.onmessage = function(message) {
 		}
 		onError("Error message from server: " + parsedMessage.message);
 		break;
+case 'videoE2Elatency':
+	    document.getElementById('testVideoE2Elatency').innerHTML= "  VideoE2ELatency (ms): " + parsedMessage.message;
+	    break;
 	case 'iceCandidate':
 		webRtcPeer.addIceCandidate(parsedMessage.candidate, function(error) {
 			if (error) {
