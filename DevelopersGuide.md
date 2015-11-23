@@ -1,7 +1,7 @@
 Developers Guide
 =========================
 
-This document describes details of the ArDemo for that utilizes [ARModule](https://github.com/nubomedia-vtt/armodule)
+This document describes details of the ArDemo that utilizes [ARModule](https://github.com/nubomedia-vtt/armodule)
 
 Details of the Demo
 ---------
@@ -48,12 +48,20 @@ An example about the syntax
 KurentoClient 
 ---------
 
-The following functionality is supported:
+The API for Kurento Client to communicate with the 
+AR filter is available at:
+https://github.com/nubomedia-vtt/armodule/blob/master/ar-markerdetector/src/server/interface/armarkerdetector.ArMarkerdetector.kmd.json
+
+Basically, the following functionality is available:
 
 ```bash
 			ArMarkerdetector arFilter = new ArMarkerdetector.Builder(pipeline).build();
-			arFilter.enableAugmentation(true);
+			arFilter.setArThing(...);
+			arFilter.enableAugmentation(false/true);
 			arFilter.setMarkerPoseFrequency(false/true, 1);
 			arFilter.setMarkerPoseFrameFrequency(false/true, 10);
 			arFilter.enableMarkerCountEvents(false/true);	
+			arFilter.addMarkerCountListener(...);
+			arFilter.addMarkerPoseListener(...);
 ```
+
