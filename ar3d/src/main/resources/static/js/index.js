@@ -121,13 +121,11 @@ function getAugmentables(){
     if(flipFlop){
 	augmentables = '{"augmentables":[' +
 	    '{"id":0, "type":"3D", "strings":[{"model":"/opt/faerie.md2"}, {"texture":"/opt/faerie2.bmp"}], "floats":[{"scale":0.09}]},' +
-  '{"id":1, "type":"3D", "strings":[{"detect_planar":"/opt/raatajatrahanalaiset.png","model":"/opt/teapot.ply"}], "floats":[{"scale":0.1}]},' +
 	    ']}';
     }
     else{
 	augmentables = '{"augmentables":[' +
 	    '{"id":0, "type":"3D", "strings":[{"model":"/opt/teapot.ply"}], "floats":[{"scale":0.5}]},' +
-	    '{"id":1, "type":"3D", "strings":[{"detect_planar":"/opt/raatajatrahanalaiset.png","model":"/opt/faerie.md2"}, {"texture":"/opt/faerie2.bmp"}], "floats":[{"scale":0.03}]},' +
 	    ']}';
     }
     flipFlop = !flipFlop;
