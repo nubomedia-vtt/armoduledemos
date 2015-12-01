@@ -15,6 +15,7 @@
 //Created 2014-12-01
 package fi.vtt.nubomedia.kurento;
 import java.io.File;
+import java.io.PrintWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.nio.channels.FileChannel;
@@ -47,6 +48,7 @@ import org.kurento.module.armarkerdetector.ArKvpString;
 import org.kurento.module.armarkerdetector.ArMarkerdetector;
 import org.kurento.module.armarkerdetector.MarkerCountEvent;
 import org.kurento.module.armarkerdetector.MarkerPoseEvent;
+import org.kurento.module.armarkerdetector.TickEvent;
 import org.kurento.module.armarkerdetector.ArMarkerPose;
 import org.kurento.client.*;
 import org.apache.commons.math3.linear.RealMatrix;
@@ -73,6 +75,8 @@ public class Ar3DHandler extends TextWebSocketHandler {
 	private String jsonFile;
 	private final ConcurrentHashMap<String, UserSession> users = new ConcurrentHashMap<String, UserSession>();
     private WebRtcEndpoint webRtcEndpoint;
+
+    private PrintWriter out;
 	
 	@Autowired
 	private KurentoClient kurento;
@@ -341,8 +345,6 @@ public class Ar3DHandler extends TextWebSocketHandler {
 			});
 
 			arFilter = new ArMarkerdetector.Builder(pipeline).build();
-			arFilter.setShowDebugLevel(0);
-
 			if(jsonFile == null){
 				System.err.println("json from browser");
 				arFilter.setArThing(createArThings(jsonMessage.getAsJsonPrimitive("augmentables").getAsString()));	
@@ -352,16 +354,25 @@ public class Ar3DHandler extends TextWebSocketHandler {
 				arFilter.setArThing(createArThings(getFile(jsonFile)));	
 			}
 															
+			arFilter.enableTickEvents(true);
 			arFilter.enableAugmentation(true);
 			arFilter.setMarkerPoseFrequency(false, 1);
 			arFilter.setMarkerPoseFrameFrequency(false, 10);
 			arFilter.enableMarkerCountEvents(false);			
-
 			arFilter.addMarkerCountListener(new EventListener<MarkerCountEvent>() {
 				@Override
 				public void onEvent(MarkerCountEvent event) {
 					String result = String.format("Marker %d count:%d (diff:%d): {}", event.getMarkerId(), event.getMarkerCount(), event.getMarkerCountDiff());
 					log.debug(result, event);
+				}
+			});
+
+			arFilter.addTickListener(new EventListener<TickEvent>() {
+				@Override
+				public void onEvent(TickEvent event) {
+				    //String result = String.format("Tick msg %s time:%d : {}", event.getMsg(), event.getTickTimestamp());
+					//log.debug(result, event);
+					smart(event.getMsg(), event.getTickTimestamp());
 				}
 			});
 
@@ -418,7 +429,7 @@ public class Ar3DHandler extends TextWebSocketHandler {
 			}
 
 			webRtcEndpoint.gatherCandidates();
-
+			out = new PrintWriter("smart.txt");
 
 		} catch (Throwable t) {
 			t.printStackTrace();
@@ -442,6 +453,12 @@ public class Ar3DHandler extends TextWebSocketHandler {
 		this.jsonFile = jsonFile;		
 	}	
 
+    private void smart(String msg, double time){
+	out.println(msg + (int)time);
+	out.flush();
+	System.err.println(msg + "#" + time);
+    }
+
     private void getStats(WebSocketSession session)
     {
     	
@@ -454,8 +471,12 @@ public class Ar3DHandler extends TextWebSocketHandler {
     			case endpoint:{
 			    //System.err.println("STATS endpoint");
     				EndpointStats end_stats= (EndpointStats) s;
-    				double e2eVideLatency= end_stats.getVideoE2ELatency() / 1000000;
+    				double  e2eVideLatency= end_stats.getVideoE2ELatency() / 1000000;
     				
+				smart("***SMART E2E\t", e2eVideLatency);
+
+
+
     				JsonObject response = new JsonObject();
     				response.addProperty("id", "videoE2Elatency");
     				response.addProperty("message", e2eVideLatency);				
@@ -473,7 +494,7 @@ public class Ar3DHandler extends TextWebSocketHandler {
 			    break;
 			case outboundrtp:{
 			    RTCOutboundRTPStreamStats stats = (RTCOutboundRTPStreamStats)s;
-			    //System.err.println(stats.getRoundTripTime());
+			    //  System.err.println(stats.getRoundTripTime());
 
     			// 	JsonObject response = new JsonObject();
     			// 	response.addProperty("id", "videoE2Elatency");
