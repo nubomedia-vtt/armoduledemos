@@ -14,6 +14,14 @@
  */
 package fi.vtt.nubomedia.kurento;
 
+import org.kurento.client.KurentoClient;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
+
 //import org.kurento.client.factory.KurentoClient;
 import org.kurento.client.KurentoClient;
 import org.springframework.boot.CommandLineRunner;
@@ -33,8 +41,10 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableAutoConfiguration
 public class Ar3DApp implements WebSocketConfigurer, CommandLineRunner{
 
-    final static String DEFAULT_KMS_WS_URI = "ws://localhost:8888/kurento";
-    final static String DEFAULT_APP_SERVER_URL = "http://localhost:8080";
+    static final String DEFAULT_APP_SERVER_URL = "https://localhost:8443";
+
+    //final static String DEFAULT_KMS_WS_URI = "ws://localhost:8888/kurento";
+    //final static String DEFAULT_APP_SERVER_URL = "http://localhost:8080";
 
 	private Ar3DHandler ar3DHandler;
 
@@ -52,8 +62,9 @@ public class Ar3DApp implements WebSocketConfigurer, CommandLineRunner{
 
 	@Bean
 	public KurentoClient kurentoClient() {
-		return KurentoClient.create(System.getProperty("kms.ws.uri",
-				DEFAULT_KMS_WS_URI));
+	    return KurentoClient.create();
+	    //return KurentoClient.create(System.getProperty("kms.ws.uri",
+	    //			DEFAULT_KMS_WS_URI));
 	}
 
     @Override
