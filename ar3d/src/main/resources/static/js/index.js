@@ -13,7 +13,7 @@
  *
  */
 
-var ws = new WebSocket('ws://' + location.host + '/ar3d');
+var ws = new WebSocket('wss://' + location.host + '/ar3d');
 var videoInput;
 var videoOutput;
 var webRtcPeer;
@@ -290,6 +290,7 @@ function show_latency()
 	document.getElementById('testVideoE2Elatency').innerHTML = "  VideoE2ELatency (ms): ";
 	clearInterval(timerId);
     }
+
 }
 
 function get_stats()
