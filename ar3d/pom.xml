@@ -38,7 +38,10 @@
       <version>1.1.6.RELEASE</version>
       <version>1.2.5.RELEASE</version>
 -->
+<!--
       <version>1.2.1.RELEASE</version>
+-->
+      <version>1.2.8.RELEASE</version>
 
     </dependency>
 <!--
@@ -62,13 +65,16 @@
     <dependency>
       <groupId>org.kurento</groupId>
       <artifactId>kurento-client</artifactId>
-      <version>6.1.0</version>
+      <version>6.2.1</version>
     </dependency>
 
     <dependency>
       <groupId>org.kurento</groupId>
       <artifactId>kurento-utils-js</artifactId>
+<!--
       <version>6.1.0</version>
+-->
+      <version>6.2.0</version>
     </dependency>
     
     <dependency>
