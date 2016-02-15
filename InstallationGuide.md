@@ -13,8 +13,11 @@ wget -N https://github.com/nubomedia-vtt/armoduledemos/raw/master/install_ar3d.s
 chmod u+x ./install_ar3d.sh
 ./install_ar3d.sh
 ```
+
 The default directory where the demo is installed is the following:
+```bash
 ~/nubomedia/armoduledemos/ar3d
+```
 
 **For Ubuntu Server Users**
 
