@@ -36,20 +36,3 @@ wget -nd http://ssi.vtt.fi/ar-markerdetector-binaries/ar-markerdetector_0.0.6~rc
 
 mvn org.apache.maven.plugins:maven-install-plugin:2.5.2:install-file -Dfile=armarkerdetector-0.0.6-SNAPSHOT.jar -DpomFile=pom.xml
 
-if [ ! -d $AR3D ]; then
-  git clone https://github.com/nubomedia-vtt/armoduledemos.git
-fi
-
-cd $TARGET/armoduledemos/Models
-sudo cp teapot.ply /opt/
-sudo cp faerie.md2 /opt/
-sudo cp faerie2.bmp /opt/
-sudo cp raatajatrahanalaiset.png /opt/
-
-cd $AR3D
-
-curl -sL https://deb.nodesource.com/setup | sudo bash -
-sudo apt-get install -y nodejs
-sudo npm install -g bower
-bower --config.analytics=false install --allow-root
-mv bower_components src/main/resources/static/

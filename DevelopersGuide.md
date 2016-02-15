@@ -3,6 +3,25 @@ Developers Guide
 
 This document describes details of the ArDemo that utilizes [ARModule](https://github.com/nubomedia-vtt/armodule)
 
+
+Source Setup
+--------
+The default directory where the demo is installed is the following:
+```bash
+~/nubomedia/armoduledemos/ar3d
+```
+
+Fetch the source etc:
+```bash
+  git clone https://github.com/nubomedia-vtt/armoduledemos.git
+  cd ~/nubomedia/armoduledemos/ar3d
+  curl -sL https://deb.nodesource.com/setup | sudo bash -
+  sudo apt-get install -y nodejs
+  sudo npm install -g bower
+  bower --config.analytics=false install --allow-root
+  mv bower_components src/main/resources/static/
+```
+
 Details of the Demo
 ---------
 Ar3D Kurento Client gets the data that is passes to the filter as json either from the browser ie javascipt or from the file system
