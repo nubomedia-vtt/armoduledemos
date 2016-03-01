@@ -1,88 +1,83 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <version>6.1.0</version>	
-  <groupId>org.kurento.tutorial</groupId>
-  <artifactId>armarkerdetector</artifactId>
+  <groupId>fi.vtt.nubomedia.kurento</groupId>
+  <artifactId>arfilterdemo</artifactId>
+  <version>1.0.0</version>	
   <packaging>jar</packaging>
-  <name>Kurento AR 3D</name>
-  <description></description>
+  <name>AR 3D</name>
+  <description>
+	A library meant to be utilized in VTT's NUBOMEDIA project and related projects.
+  </description>
 
+<url>https://github.com/nubomedia-vtt/armoduledemos</url>
+<licenses>
+<license>
+<name>LGPL v2.1 license</name>
+<url>
+https://github.com/nubomedia-vtt/armoduledemos/blob/master/License.md
+</url>
+</license>
+</licenses>
+<developers>
+<developer>
+<id>mylikera</id>
+<name>Markus Ylikerälä</name>
+<email>Markus.Ylikerala@vtt.fi</email>
+</developer>
+</developers>
+<scm>
+<connection>
+https://github.com/nubomedia-vtt/armoduledemos.git
+</connection>
+<developerConnection>
+https://github.com/nubomedia-vtt/armoduledemos.git
+</developerConnection>
+<url>
+https://github.com/nubomedia-vtt/armoduledemos.git
+</url>
+</scm>
   <properties>
-<!--
-    <demo.port>8082</demo.port>
--->    
-
-
-    <start-class>fi.vtt.nubomedia.kurento.Ar3DApp</start-class>
-    
+    <start-class>fi.vtt.nubomedia.kurento.Ar3DApp</start-class>    
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>    
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-
-<!--
-    <spring-boot.version>1.2.5.RELEASE</spring-boot.version>
-    <spring-boot.version>1.1.6.RELEASE</spring-boot.version>
--->
     <spring-boot.version>1.2.1.RELEASE</spring-boot.version>
-
   </properties>
      
   <dependencies>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
-<!--
-      <version>1.1.6.RELEASE</version>
-      <version>1.2.5.RELEASE</version>
--->
-<!--
-      <version>1.2.1.RELEASE</version>
--->
       <version>1.2.8.RELEASE</version>
-
     </dependency>
-<!--
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-test</artifactId>
-			<version>4.1.0.RELEASE</version>
-			<scope>test</scope>
-		</dependency>
--->
-
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-websocket</artifactId>
-<!--
-      <version>4.2.1.RELEASE</version>
--->
       <version>4.1.4.RELEASE</version>
     </dependency>
-
     <dependency>
       <groupId>org.kurento</groupId>
       <artifactId>kurento-client</artifactId>
       <version>6.2.1</version>
     </dependency>
-
     <dependency>
       <groupId>org.kurento</groupId>
       <artifactId>kurento-utils-js</artifactId>
-<!--
-      <version>6.1.0</version>
--->
       <version>6.2.0</version>
     </dependency>
-    
+<!--
     <dependency>
       <groupId>org.kurento.module</groupId>
       <artifactId>armarkerdetector</artifactId>
-      <version>0.0.6-SNAPSHOT</version>
+      <version>1.0.0</version>
     </dependency>
-    
+-->
+    <dependency>
+      <groupId>fi.vtt.nubomedia.kurento</groupId>
+      <artifactId>arfilter</artifactId>
+      <version>1.0.0</version>
+    </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-math3</artifactId>
