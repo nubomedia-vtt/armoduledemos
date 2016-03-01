@@ -42,6 +42,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+/*
 import org.kurento.module.armarkerdetector.ArKvpFloat;
 import org.kurento.module.armarkerdetector.ArKvpInteger;
 import org.kurento.module.armarkerdetector.ArKvpString;
@@ -50,12 +52,25 @@ import org.kurento.module.armarkerdetector.MarkerCountEvent;
 import org.kurento.module.armarkerdetector.MarkerPoseEvent;
 import org.kurento.module.armarkerdetector.TickEvent;
 import org.kurento.module.armarkerdetector.ArMarkerPose;
+*/
+
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.ArKvpFloat;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.ArKvpInteger;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.ArKvpString;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.ArMarkerdetector;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.MarkerCountEvent;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.MarkerPoseEvent;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.TickEvent;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.ArMarkerPose;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.ArThing;
+import fi.vtt.nubomedia.kurento.module.armarkerdetector.OverlayType;
+
+
+
 import org.kurento.client.*;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.DefaultRealMatrixChangingVisitor;
 import org.apache.commons.math3.linear.MatrixUtils;
-import org.kurento.module.armarkerdetector.ArThing;
-import org.kurento.module.armarkerdetector.OverlayType;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
