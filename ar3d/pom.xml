@@ -1,50 +1,60 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
   <modelVersion>4.0.0</modelVersion>
-  <groupId>fi.vtt.nubomedia.kurento</groupId>
+  <groupId>fi.vtt.nubomedia.armodule</groupId>
   <artifactId>arfilterdemo</artifactId>
-  <version>1.0.0</version>	
+  <version>1.0.2</version>	
   <packaging>jar</packaging>
   <name>AR 3D</name>
+  
   <description>
-	A library meant to be utilized in VTT's NUBOMEDIA project and related projects.
+    A library meant to be utilized in VTT's NUBOMEDIA project and related projects.
   </description>
-
-<url>https://github.com/nubomedia-vtt/armoduledemos</url>
-<licenses>
-<license>
-<name>LGPL v2.1 license</name>
-<url>
-https://github.com/nubomedia-vtt/armoduledemos/blob/master/License.md
-</url>
-</license>
-</licenses>
-<developers>
-<developer>
-<id>mylikera</id>
-<name>Markus Ylikerälä</name>
-<email>Markus.Ylikerala@vtt.fi</email>
-</developer>
-</developers>
-<scm>
-<connection>
+  
+  <url>https://github.com/nubomedia-vtt/armoduledemos</url>
+  <licenses>
+    <license>
+      <name>LGPL v2.1 license</name>
+      <url>
+	https://github.com/nubomedia-vtt/armoduledemos/blob/master/License.md
+      </url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <id>mylikera</id>
+      <name>Markus Ylikerälä</name>
+      <email>Markus.Ylikerala@vtt.fi</email>
+    </developer>
+  </developers>
+  <scm>
+    <connection>
 https://github.com/nubomedia-vtt/armoduledemos.git
-</connection>
-<developerConnection>
+    </connection>
+    <developerConnection>
 https://github.com/nubomedia-vtt/armoduledemos.git
-</developerConnection>
-<url>
+    </developerConnection>
+    <url>
 https://github.com/nubomedia-vtt/armoduledemos.git
-</url>
-</scm>
+    </url>
+  </scm>
+  
+  
   <properties>
-    <start-class>fi.vtt.nubomedia.kurento.Ar3DApp</start-class>    
+    <demo.port>8094</demo.port>
+    
+    <!-- Main class -->
+    <start-class>fi.vtt.nubomedia.armodule.Ar3DApp</start-class>
+    
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>    
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
-    <spring-boot.version>1.2.1.RELEASE</spring-boot.version>
+    <spring-boot.version>1.2.1.RELEASE</spring-boot.version>    
   </properties>
-     
+  
   <dependencies>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -56,6 +66,8 @@ https://github.com/nubomedia-vtt/armoduledemos.git
       <artifactId>spring-websocket</artifactId>
       <version>4.1.4.RELEASE</version>
     </dependency>
+    
+    <!-- Kurento -->
     <dependency>
       <groupId>org.kurento</groupId>
       <artifactId>kurento-client</artifactId>
@@ -66,27 +78,46 @@ https://github.com/nubomedia-vtt/armoduledemos.git
       <artifactId>kurento-utils-js</artifactId>
       <version>6.2.0</version>
     </dependency>
-<!--
+
     <dependency>
-      <groupId>org.kurento.module</groupId>
-      <artifactId>armarkerdetector</artifactId>
-      <version>1.0.0</version>
+	<groupId>fi.vtt.nubomedia</groupId>
+	<artifactId>arfilter</artifactId>
+	<version>1.0.0</version>
     </dependency>
--->
-    <dependency>
-      <groupId>fi.vtt.nubomedia.kurento</groupId>
-      <artifactId>arfilter</artifactId>
-      <version>1.0.0</version>
-    </dependency>
+
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-math3</artifactId>
       <version>3.5</version>
     </dependency>
+
   </dependencies>
 
+
+  
   <build>
     <plugins>
+      <plugin>
+	<groupId>org.codehaus.mojo</groupId>
+	<artifactId>exec-maven-plugin</artifactId>
+	<executions>
+	  <execution>
+	    <phase>generate-sources</phase>
+	    <goals>
+	      <goal>exec</goal>
+	    </goals>
+	  </execution>
+	</executions>
+	<configuration>
+	  <executable>bower</executable>
+	  <arguments>
+	    <argument>install</argument>
+	    <argument>--allow-root</argument>
+	  </arguments>
+	  <mainClass>${start-class}</mainClass>
+	</configuration>
+      </plugin>
+
       <plugin>
 	<groupId>org.springframework.boot</groupId>
 	<artifactId>spring-boot-maven-plugin</artifactId>
@@ -103,7 +134,71 @@ https://github.com/nubomedia-vtt/armoduledemos.git
 	  </execution>
 	</executions>
       </plugin>
+
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>versions-maven-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<generateBackupPoms>false</generateBackupPoms>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-source-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>package-sources</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>package-javadoc</id>
+						<phase>package</phase>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.3</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
     </plugins>
   </build>
-
+  
 </project>
